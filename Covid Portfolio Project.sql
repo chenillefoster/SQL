@@ -1,3 +1,5 @@
+-- Follow Along Project with Alex the Analyst on Youtube
+
 Select * 
 From PortfolioProject..['Covid Deaths$'] 
 Where continent is not null 
