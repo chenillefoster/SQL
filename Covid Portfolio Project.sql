@@ -5,17 +5,20 @@ From PortfolioProject..['Covid Deaths$']
 Where continent is not null 
 Order by 3,4
 
-
 Select location, date, total_cases, new_cases, total_deaths, population
 From PortfolioProject..['Covid Deaths$']
 Where continent is not null 
 Order by 1,2
+
+-- Find Percentage of Deaths in United States
 
 Select location, date, total_cases, total_deaths, (total_deaths/total_cases)*100 as DeathPercentage
 From PortfolioProject..['Covid Deaths$']
 Where location like '%states%'
 and continent is not null 
 Order by 1,2
+
+-- Find Percent of Population Infected
 
 Select location, date, population, total_cases, (total_cases/population)*100 as PercentPopulationInfected
 From PortfolioProject..['Covid Deaths$']
@@ -29,6 +32,7 @@ Where continent is not null
 Group by location, population
 Order by PercentPopulationInfected desc
 
+-- Find Total Death Count
 
 Select location, MAX(cast(total_deaths as int)) as TotalDeathCount
 From PortfolioProject..['Covid Deaths$']
@@ -36,20 +40,20 @@ Where continent is not null
 Group by location
 Order by TotalDeathCount desc
 
-
 Select continent, MAX(cast(total_deaths as int)) as TotalDeathCount
 From PortfolioProject..['Covid Deaths$']
 Where continent is not null 
 Group by continent
 Order by TotalDeathCount desc
 
-
+-- Find Death Percentage for Global Data
 
 Select SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/Sum(new_cases)*100 as DeathPercentage
 From PortfolioProject..['Covid Deaths$']
 Where continent is not null 
 Order by 1,2
 
+-- Find Rolling Vaccinated Numbers
 
 With PopvsVac (Continent, location, date, population, new_vaccinations, RollingPeopleVaccinated)
 as
@@ -62,9 +66,10 @@ Join PortfolioProject..['Covid Deaths$'] dea
 Where dea.continent is not null
  )
 
+-- Find Percent of Population Vaccinated
+
  Select *, (RollingPeopleVaccinated/Population)*100 as PercentVaccinated
  From PopvsVac
-
 
 
  Drop table if exists #PercentPopulationVaccinated
